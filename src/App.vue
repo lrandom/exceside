@@ -1,53 +1,45 @@
 <template>
-  <div id="app">
-    <div>{{ user.name | toUpperCase }}</div>
-    <div>{{ nameOfUser }}</div>
-    <button @click="increaseNumber()">Tang</button>
-    <button @click="decreaseNumber()">Giam</button>
+  <div>
+    <div >
+      <div class="modal" :class="{ hidden: !inStrock }" >
+        <img :src="imgModal" alt="photo">
+        <button @click="toggleModal">X</button>
+      </div>
+      <div v-for="img in listImg" :key="img.id">
+        <img :src="img.img" alt="photo" @click="toggleModal(img.img)" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: "App",
-  components: {},
   data() {
     return {
-      image: 'https://cdn.vjshop.vn/hightech/may-choi-game/ps5/sony-ps-5-1.jpg',
-      imageAlt: 'ps5 alt',
-      product: 'ps5',
-      productLink: 'https://bachtungps.com.vn/may-sony-playstation-5-ps5-1',
-      quantity: 10,
-      price: 10000,
-      discount: 0.2,
-      inStock: true,
-      classObject: {
-        'bg-green': true,
-        'bg-blue': false
-      }
-    }
+      imgModal : '',
+      listImg: [
+        { img: require("./assets/girl-1.jpg") },
+        { img: require("./assets/logo.png") },
+      ],
+      inStrock: false,
+    };
   },
   methods: {
-    increaseNumber() {
-      this.numberCounter++;
+    toggleModal(src) {
+      this.inStrock = !this.inStrock;
+      this.imgModal = src;
     },
-    decreaseNumber() {
-      this.numberCounter--;
-    },
+    test() {
+      console.log("test");
+    }
   },
-  computed: {
-    nameOfUser() {
-      const { name } = this.user;
-      return name;
-    },
-  },
-  watch: {
-    numberCounter(newValue, oldValue) {
-      console.log(newValue, oldValue);
-    },
-  },
+  moutend:function() {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape") {
+        this.test();
+      }
+    });
+  }
 };
 </script>
 
@@ -59,5 +51,23 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.hidden {
+  display: none !important;
+}
+.modal {
+  background: rgb(14, 14, 14, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.modal img {
+  width: 400px;
+  height: 400px;
 }
 </style>
